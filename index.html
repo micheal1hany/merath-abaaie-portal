@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مؤتمر ميراث آبائي للخدام</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .header h3 {
+            font-size: 18px;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .navigation {
+            display: flex;
+            background: #f7fafc;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .nav-button {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            color: #4a5568;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-button:hover {
+            background: #edf2f7;
+            color: #5a67d8;
+        }
+
+        .nav-button.active {
+            color: #5a67d8;
+            border-bottom-color: #5a67d8;
+            background: white;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .day-section {
+            display: none;
+        }
+
+        .day-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .day-title {
+            font-size: 26px;
+            color: #2d3748;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #5a67d8;
+            font-weight: 600;
+        }
+
+        .schedule-item {
+            background: #f7fafc;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            border-right: 4px solid #5a67d8;
+            transition: all 0.3s ease;
+        }
+
+        .schedule-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 12px rgba(90, 103, 216, 0.2);
+        }
+
+        .time {
+            display: inline-block;
+            background: #5a67d8;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .activity-title {
+            font-size: 20px;
+            color: #2d3748;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .speaker {
+            color: #4a5568;
+            font-size: 15px;
+            margin: 5px 0;
+            padding-right: 10px;
+        }
+
+        .speaker-label {
+            color: #5a67d8;
+            font-weight: 600;
+        }
+
+        .lecture {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-right-color: #6b46c1;
+        }
+
+        .prayer {
+            background: linear-gradient(135deg, #4fd1c515 0%, #3b82f615 100%);
+            border-right-color: #3b82f6;
+        }
+
+        .study {
+            background: linear-gradient(135deg, #f093fb15 0%, #f5576c15 100%);
+            border-right-color: #ec4899;
+        }
+
+        /* Prayer Tile Styles */
+        .prayer-tile {
+            background: #f7fafc;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border-right: 4px solid #3b82f6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .prayer-tile:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, #4fd1c515 0%, #3b82f615 100%);
+        }
+
+        .prayer-tile-title {
+            font-size: 22px;
+            color: #2d3748;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Dropdown Styles */
+        .dropdown-container {
+            background: #f7fafc;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border-right: 4px solid #5a67d8;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-container:hover {
+            box-shadow: 0 4px 12px rgba(90, 103, 216, 0.2);
+        }
+
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+
+        .dropdown-title {
+            font-size: 22px;
+            color: #2d3748;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dropdown-arrow {
+            font-size: 20px;
+            color: #5a67d8;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .dropdown-content.open {
+            max-height: 1000px;
+            margin-top: 15px;
+        }
+
+        .dropdown-item {
+            background: white;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-right: 3px solid #5a67d8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dropdown-item:hover {
+            background: #edf2f7;
+            transform: translateX(-3px);
+        }
+
+        .dropdown-item-text {
+            font-size: 16px;
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .header h2 {
+                font-size: 18px;
+            }
+
+            .header h3 {
+                font-size: 16px;
+            }
+
+            .nav-button {
+                font-size: 14px;
+                padding: 15px 8px;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .activity-title {
+                font-size: 18px;
+            }
+
+            .schedule-item {
+                padding: 15px;
+            }
+
+            .prayer-tile-title,
+            .dropdown-title {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>مطرانية ٦ أكتوبر وأوسيم للأقباط الأرثوذكس</h1>
+            <h2>كنيسة الشهيد العظيم مارجرجس - الفردوس</h2>
+            <h3>إجتماع الخدام</h3>
+            <h1 style="margin-top: 20px;">مؤتمر ميراث آبائي للخدام</h1>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button active" onclick="showDay(1)">اليوم الأول</button>
+            <button class="nav-button" onclick="showDay(2)">اليوم الثاني</button>
+            <button class="nav-button" onclick="showDay(3)">صلوات وترانيم</button>
+        </div>
+
+        <div class="content">
+            <!-- Day 1 -->
+            <div id="day1" class="day-section active">
+                <h2 class="day-title">📅 اليوم الأول</h2>
+
+                <div class="schedule-item">
+                    <span class="time">١٢:٠٠ - ١٢:٣٠</span>
+                    <div class="activity-title">وصول وتسكين</div>
+                </div>
+
+                <div class="schedule-item">
+                    <span class="time">١٢:٣٠ - ١:٠٠</span>
+                    <div class="activity-title">شرح هدف المؤتمر</div>
+                </div>
+
+                <div class="schedule-item lecture">
+                    <span class="time">١:٠٠ - ٢:٣٠</span>
+                    <div class="activity-title">📚 المحاضرة الأولى: الخادم والسوشيال ميديا</div>
+                    <div class="speaker"><span class="speaker-label">المتكلم الأساسي:</span> قدس أبونا مكاريوس</div>
+                    <div class="speaker"><span class="speaker-label">المتكلم الاحتياطي:</span> تاسوني كرستين مجدي</div>
+                </div>
+
+                <div class="schedule-item">
+                    <span class="time">٣:٠٠ - ٥:٠٠</span>
+                    <div class="activity-title">غداء وراحة</div>
+                </div>
+
+                <div class="schedule-item prayer">
+                    <span class="time">٥:٠٠ - ٥:٣٠</span>
+                    <div class="activity-title">🙏 صلاة (غروب ونوم)</div>
+                </div>
+
+                <div class="schedule-item prayer">
+                    <span class="time">٥:٣٠ - ٦:٠٠</span>
+                    <div class="activity-title">🎵 ترانيم</div>
+                    <div class="speaker">لحن (أنا أعرفه) - قدس أبونا جيروم</div>
+                </div>
+
+                <div class="schedule-item lecture">
+                    <span class="time">٦:٠٠ - ٧:٣٠</span>
+                    <div class="activity-title">📚 المحاضرة الثانية: الحفاظ على الهوية القبطية الأرثوذكسية</div>
+                    <div class="speaker"><span class="speaker-label">المتكلم الأساسي:</span> د/ سامح طلعت</div>
+                    <div class="speaker"><span class="speaker-label">المتكلم الاحتياطي:</span> أنكل فادي القس</div>
+                </div>
+
+                <div class="schedule-item">
+                    <span class="time">٧:٣٠ - ٨:٠٠</span>
+                    <div class="activity-title">راحة</div>
+                </div>
+
+                <div class="schedule-item study">
+                    <span class="time">٨:٠٠ - ٩:٠٠</span>
+                    <div class="activity-title">📖 دراسة كتاب: رسالة تيطس</div>
+                    <div class="speaker">مقدمة / الإصحاح الأول</div>
+                </div>
+
+                <div class="schedule-item">
+                    <span class="time">٩:٠٠ - ١٠:٠٠</span>
+                    <div class="activity-title">عشاء</div>
+                </div>
+
+                <div class="schedule-item prayer">
+                    <span class="time">١٠:٠٠ - ١١:٠٠</span>
+                    <div class="activity-title">🙏 صلاة</div>
+                    <div class="speaker">تسبحة (قيادة أنكل فادي)</div>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div id="day2" class="day-section">
+                <h2 class="day-title">📅 اليوم الثاني</h2>
+
+                <div class="schedule-item prayer">
+                    <span class="time">٨:٠٠ - ١٠:٠٠</span>
+                    <div class="activity-title">⛪ قداس</div>
+                </div>
+
+                <div class="schedule-item">
+                    <span class="time">١٠:٠٠ - ١١:٠٠</span>
+                    <div class="activity-title">فطار</div>
+                </div>
+
+                <div class="schedule-item prayer">
+                    <span class="time">١١:٠٠ - ١١:٣٠</span>
+                    <div class="activity-title">🎵 ترانيم</div>
+                    <div class="speaker">لحن (أنا الصغير)</div>
+                </div>
+
+                <div class="schedule-item study">
+                    <span class="time">١١:٣٠ - ١٢:٣٠</span>
+                    <div class="activity-title">📖 دراسة كتاب: رسالة تيطس</div>
+                    <div class="speaker">الإصحاح الثاني والثالث</div>
+                </div>
+
+                <div class="schedule-item">
+                    <span class="time">١٢:٣٠ - ١:٠٠</span>
+                    <div class="activity-title">راحة</div>
+                </div>
+
+                <div class="schedule-item lecture">
+                    <span class="time">١:٠٠ - ٢:٣٠</span>
+                    <div class="activity-title">📚 المحاضرة الثالثة: كيف يمتلئ الخادم روحياً</div>
+                    <div class="speaker" style="margin-bottom: 8px;">حتى لا يضيع وسط الخدمة (مرقس ٦)</div>
+                    <div class="speaker"><span class="speaker-label">المتكلم الأساسي:</span> أ/ عادل ألفونس</div>
+                    <div class="speaker"><span class="speaker-label">المتكلم الاحتياطي:</span> ماريان مجدي</div>
+                </div>
+
+                <div class="schedule-item">
+                    <span class="time">٣:٠٠ - ٤:٠٠</span>
+                    <div class="activity-title">غداء</div>
+                </div>
+
+                <div class="schedule-item">
+                    <span class="time">٤:٠٠ - ٥:٠٠</span>
+                    <div class="activity-title">🚌 مغادرة</div>
+                </div>
+            </div>
+
+            <!-- Prayers and Hymns Tab -->
+            <div id="day3" class="day-section">
+                <h2 class="day-title">🙏 صلوات وترانيم</h2>
+
+                <!-- Prayer Tiles -->
+                <div class="prayer-tile" onclick="openPrayer('maghrib')">
+                    <div class="prayer-tile-title">
+                        <span>🌅</span>
+                        <span>صلاة الغروب</span>
+                    </div>
+                </div>
+
+                <div class="prayer-tile" onclick="openPrayer('nom')">
+                    <div class="prayer-tile-title">
+                        <span>🌙</span>
+                        <span>صلاة النوم</span>
+                    </div>
+                </div>
+
+                <!-- Alhaan Dropdown -->
+                <div class="dropdown-container">
+                    <div class="dropdown-header" onclick="toggleDropdown('alhaan')">
+                        <div class="dropdown-title">
+                            <span>🎶</span>
+                            <span>الألحان</span>
+                        </div>
+                        <span class="dropdown-arrow" id="alhaan-arrow">▼</span>
+                    </div>
+                    <div class="dropdown-content" id="alhaan-content">
+                        <div class="dropdown-item" onclick="openContent('lahn1')">
+                            <span>🎵</span>
+                            <span class="dropdown-item-text">لحن أنا أعرفه</span>
+                        </div>
+                        <div class="dropdown-item" onclick="openContent('lahn2')">
+                            <span>🎵</span>
+                            <span class="dropdown-item-text">لحن أنا الصغير</span>
+                        </div>
+                        <div class="dropdown-item" onclick="openContent('lahn3')">
+                            <span>🎵</span>
+                            <span class="dropdown-item-text">لحن ذوكسا باتري</span>
+                        </div>
+                        <div class="dropdown-item" onclick="openContent('lahn4')">
+                            <span>🎵</span>
+                            <span class="dropdown-item-text">لحن أجيوس</span>
+                        </div>
+                        <div class="dropdown-item" onclick="openContent('lahn5')">
+                            <span>🎵</span>
+                            <span class="dropdown-item-text">لحن تين ثينو</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Taraneem Dropdown -->
+                <div class="dropdown-container">
+                    <div class="dropdown-header" onclick="toggleDropdown('taraneem')">
+                        <div class="dropdown-title">
+                            <span>🎤</span>
+                            <span>الترانيم</span>
+                        </div>
+                        <span class="dropdown-arrow" id="taraneem-arrow">▼</span>
+                    </div>
+                    <div class="dropdown-content" id="taraneem-content">
+                        <div class="dropdown-item" onclick="openContent('tarneema1')">
+                            <span>🎼</span>
+                            <span class="dropdown-item-text">ترنيمة يا رب ارحم</span>
+                        </div>
+                        <div class="dropdown-item" onclick="openContent('tarneema2')">
+                            <span>🎼</span>
+                            <span class="dropdown-item-text">ترنيمة قدوس قدوس</span>
+                        </div>
+                        <div class="dropdown-item" onclick="openContent('tarneema3')">
+                            <span>🎼</span>
+                            <span class="dropdown-item-text">ترنيمة في حضن أبويا</span>
+                        </div>
+                        <div class="dropdown-item" onclick="openContent('tarneema4')">
+                            <span>🎼</span>
+                            <span class="dropdown-item-text">ترنيمة شكراً ليك يا رب</span>
+                        </div>
+                        <div class="dropdown-item" onclick="openContent('tarneema5')">
+                            <span>🎼</span>
+                            <span class="dropdown-item-text">ترنيمة أنا معاك</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDay(dayNumber) {
+            document.querySelectorAll('.day-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById('day' + dayNumber).classList.add('active');
+            
+            event.target.classList.add('active');
+        }
+
+        function toggleDropdown(dropdownId) {
+            const content = document.getElementById(dropdownId + '-content');
+            const arrow = document.getElementById(dropdownId + '-arrow');
+            
+            content.classList.toggle('open');
+            arrow.classList.toggle('open');
+        }
+
+        function openPrayer(prayerType) {
+            // Placeholder for opening prayer content
+            // You can later link this to PDF files or separate pages
+            alert('سيتم فتح: ' + (prayerType === 'maghrib' ? 'صلاة الغروب' : 'صلاة النوم'));
+            console.log('Opening prayer:', prayerType);
+        }
+
+        function openContent(contentId) {
+            // Placeholder for opening hymn/tarneema content
+            // You can later link this to PDF files or separate pages
+            alert('سيتم فتح المحتوى: ' + contentId);
+            console.log('Opening content:', contentId);
+        }
+    </script>
+</body>
+</html>
