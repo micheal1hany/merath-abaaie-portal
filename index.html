@@ -129,6 +129,16 @@
             box-shadow: 0 4px 12px rgba(90, 103, 216, 0.2);
         }
 
+        /* Make clickable items have pointer cursor */
+        .schedule-item.clickable {
+            cursor: pointer;
+        }
+
+        .schedule-item.clickable:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 16px rgba(90, 103, 216, 0.3);
+        }
+
         .time {
             display: inline-block;
             background: #5a67d8;
@@ -382,7 +392,8 @@
                     <div class="activity-title">راحة</div>
                 </div>
 
-                <div class="schedule-item study">
+                <!-- UPDATED: Added onclick and clickable class -->
+                <div class="schedule-item study clickable" onclick="openPDF('./assets/pdfs/resalet-tetas.pdf')">
                     <span class="time">٨:٠٠ - ٩:٠٠</span>
                     <div class="activity-title">📖 دراسة كتاب: رسالة تيطس</div>
                     <div class="speaker">مقدمة / الإصحاح الأول</div>
@@ -420,7 +431,7 @@
                     <div class="speaker">لحن (أنا الصغير)</div>
                 </div>
 
-                <div class="schedule-item study">
+                <div class="schedule-item study clickable" onclick="openPDF('./assets/pdfs/resalet-tetas.pdf')">
                     <span class="time">١١:٣٠ - ١٢:٣٠</span>
                     <div class="activity-title">📖 دراسة كتاب: رسالة تيطس</div>
                     <div class="speaker">الإصحاح الثاني والثالث</div>
@@ -573,6 +584,11 @@
             // You can later link this to PDF files or separate pages
             alert('سيتم فتح المحتوى: ' + contentId);
             console.log('Opening content:', contentId);
+        }
+
+        // NEW FUNCTION: Opens PDF in new tab
+        function openPDF(pdfPath) {
+            window.open(pdfPath, '_blank');
         }
     </script>
 </body>
