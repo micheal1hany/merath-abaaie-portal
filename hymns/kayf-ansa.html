@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كيف انسى - مؤتمر ميراث آبائي</title>
+    <style>
+        :root {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --header-gradient-start: #5a67d8;
+            --header-gradient-end: #6b46c1;
+            --container-bg: #ffffff;
+            --back-btn-bg: rgba(255,255,255,0.2);
+            --back-btn-color: #ffffff;
+            --back-btn-hover-bg: rgba(255,255,255,0.35);
+            --title-color: #ffffff;
+            --content-bg: #ffffff;
+            --lyrics-color: #2d3748;
+            --verse-bg: #f7fafc;
+            --verse-border: #5a67d8;
+            --chorus-bg: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            --chorus-border: #6b46c1;
+            --label-color: #5a67d8;
+            --divider-color: #e2e8f0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-gradient-start: #1a1a2e;
+                --bg-gradient-end: #16213e;
+                --header-gradient-start: #3730a3;
+                --header-gradient-end: #4c1d95;
+                --container-bg: #1e1e2e;
+                --back-btn-bg: rgba(255,255,255,0.15);
+                --back-btn-color: #e2e8f0;
+                --back-btn-hover-bg: rgba(255,255,255,0.25);
+                --title-color: #e2e8f0;
+                --content-bg: #1e1e2e;
+                --lyrics-color: #e2e8f0;
+                --verse-bg: #2d2d4e;
+                --verse-border: #818cf8;
+                --chorus-bg: linear-gradient(135deg, #667eea22 0%, #764ba222 100%);
+                --chorus-border: #a78bfa;
+                --label-color: #818cf8;
+                --divider-color: #2d2d4e;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--back-btn-bg);
+            color: var(--back-btn-color);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+            align-self: flex-start;
+        }
+
+        .back-btn:hover {
+            background: var(--back-btn-hover-bg);
+        }
+
+        .header-title {
+            text-align: center;
+        }
+
+        .header-title .icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .header-title h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--title-color);
+            line-height: 1.4;
+        }
+
+        .content {
+            padding: 36px 30px;
+            background: var(--content-bg);
+        }
+
+        .verse-block {
+            background: var(--verse-bg);
+            border-right: 4px solid var(--verse-border);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+
+        .chorus-block {
+            background: var(--chorus-bg);
+            border-right: 4px solid var(--chorus-border);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+        }
+
+        .block-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--label-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .lyrics-text {
+            font-size: 18px;
+            color: var(--lyrics-color);
+            line-height: 2;
+            white-space: pre-line;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 0; }
+            .container { border-radius: 0; min-height: 100vh; }
+            .header { padding: 20px; }
+            .header-title h1 { font-size: 22px; }
+            .content { padding: 24px 16px; }
+            .lyrics-text { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a class="back-btn" href="../index.html#day3" onclick="history.length > 1 ? (history.back(), false) : true">
+                &#8592; رجوع
+            </a>
+            <div class="header-title">
+                <span class="icon">🎼</span>
+                <h1>كيف انسى</h1>
+            </div>
+        </div>
+        <div class="content">
+
+            <!-- الكوبليه الأول -->
+            <div class="verse-block">
+                <div class="block-label">١</div>
+                <div class="lyrics-text">كيف أنسى سيدي الغالي المسيح من رآني في هواني فأتى طوعاً إلىَ
+كيف أنسى دم ذا الجنب الجريح من فدانى واشتراني كاسراً قيد يدي</div>
+            </div>
+
+            <!-- الكوبليه الثاني -->
+            <div class="verse-block">
+                <div class="block-label">٢</div>
+                <div class="lyrics-text">كيف أنسى قلبك العافي الكبير فمحى كل ذنوبي وابتدى عهداً جديداً
+من عفا عنى وعن جرمي الخطير وملأ بالروح قلبي فغدا قلباً سعيداً</div>
+            </div>
+
+            <!-- الكوبليه الثالث -->
+            <div class="verse-block">
+                <div class="block-label">٣</div>
+                <div class="lyrics-text">كيف أنسى قصة عمري التي فضيقاتي وجراحي قد شفتهالي يداك
+تحكي تروى كيف كان حبك ونجاتي ونجاحي من وهبها لي سواك</div>
+            </div>
+
+            <!-- الكوبليه الرابع -->
+            <div class="verse-block">
+                <div class="block-label">٤</div>
+                <div class="lyrics-text">كيف أنسى سترك طول السنين وقت حزني وقت ضيقي وسط أمواج الحياة
+يدك تحرسني في كل حين صرت حصني ورفيقي صرت لى باب النجاة</div>
+            </div>
+
+            <!-- الكوبليه الخامس -->
+            <div class="verse-block">
+                <div class="block-label">٥</div>
+                <div class="lyrics-text">هبني أنسى سيدي ذاتي هنا وأغنى في حياتي عالماً أني غريب
+فعنادي قد أذاقني العنا ذاكراً أنك ربى سوف تأتى عن قريب</div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
