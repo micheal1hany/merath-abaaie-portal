@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>عرض الملف - مؤتمر ميراث آبائي</title>
+    <style>
+        :root {
+            --header-bg: #5a67d8;
+            --header-text: #ffffff;
+            --body-bg: #2d2d2d;
+            --toolbar-bg: #3d3d3d;
+            --toolbar-text: #ffffff;
+            --btn-bg: rgba(255,255,255,0.15);
+            --btn-hover: rgba(255,255,255,0.28);
+            --canvas-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            --page-gap: 16px;
+            --loading-color: #818cf8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: var(--body-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* ── Top header ── */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 52px;
+            background: var(--header-bg);
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse; /* keep back-btn on right (visual RTL) */
+            padding: 0 14px;
+            gap: 12px;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--btn-bg);
+            color: var(--header-text);
+            border: none;
+            padding: 7px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        .back-btn:hover { background: var(--btn-hover); }
+
+        .doc-title {
+            color: var(--header-text);
+            font-size: 15px;
+            font-weight: 600;
+            flex: 1;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* ── Bottom toolbar ── */
+        .toolbar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 56px;
+            background: var(--toolbar-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tb-btn {
+            background: var(--btn-bg);
+            color: var(--toolbar-text);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        .tb-btn:hover { background: var(--btn-hover); }
+        .tb-btn:disabled { opacity: 0.35; cursor: default; }
+
+        .page-info {
+            color: var(--toolbar-text);
+            font-size: 14px;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .zoom-label {
+            color: var(--toolbar-text);
+            font-size: 13px;
+            min-width: 46px;
+            text-align: center;
+        }
+
+        .tb-sep {
+            width: 1px;
+            height: 28px;
+            background: rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+
+        /* ── Scroll container ── */
+        #scroll-container {
+            position: fixed;
+            top: 52px;
+            bottom: 56px;
+            left: 0; right: 0;
+            overflow-y: auto;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--page-gap);
+            gap: var(--page-gap);
+        }
+
+        /* ── Canvas pages ── */
+        .page-wrapper {
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-wrapper canvas {
+            display: block;
+            box-shadow: var(--canvas-shadow);
+            border-radius: 3px;
+        }
+
+        .page-number-badge {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        /* ── Loading state ── */
+        #loading {
+            position: fixed;
+            top: 52px; bottom: 56px;
+            left: 0; right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            color: #ccc;
+            font-size: 16px;
+            z-index: 50;
+        }
+
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border: 4px solid rgba(255,255,255,0.15);
+            border-top-color: var(--loading-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #error-msg {
+            display: none;
+            position: fixed;
+            top: 52px; bottom: 56px;
+            left: 0; right: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            color: #f87171;
+            font-size: 16px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .retry-btn {
+            background: #5a67d8;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 480px) {
+            .zoom-label { display: none; }
+            .tb-btn { width: 36px; height: 36px; font-size: 16px; }
+            .page-info { font-size: 13px; min-width: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <a class="back-btn" id="backBtn" href="../index.html">&#8592; رجوع</a>
+        <div class="doc-title" id="docTitle">جاري التحميل...</div>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <span>جاري تحميل الملف...</span>
+    </div>
+
+    <!-- Error -->
+    <div id="error-msg" style="display:none;">
+        <span style="font-size:36px;">⚠️</span>
+        <span id="error-text">تعذّر تحميل الملف</span>
+        <button class="retry-btn" onclick="location.reload()">إعادة المحاولة</button>
+    </div>
+
+    <!-- PDF pages scroll area -->
+    <div id="scroll-container"></div>
+
+    <!-- Bottom toolbar -->
+    <div class="toolbar">
+        <button class="tb-btn" id="btnZoomOut" title="تصغير" onclick="changeZoom(-0.15)">−</button>
+        <span class="zoom-label" id="zoomLabel">100%</span>
+        <button class="tb-btn" id="btnZoomIn" title="تكبير" onclick="changeZoom(+0.15)">+</button>
+
+        <div class="tb-sep"></div>
+
+        <button class="tb-btn" id="btnPrev" title="الصفحة السابقة" onclick="goPage(-1)">&#8249;</button>
+        <span class="page-info" id="pageInfo">— / —</span>
+        <button class="tb-btn" id="btnNext" title="الصفحة التالية" onclick="goPage(+1)">&#8250;</button>
+    </div>
+
+    <!-- PDF.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // ── Config ──────────────────────────────────────────────────────────
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        // cMap URL — needed for correct Arabic / CJK glyph encoding in PDFs
+        const CMAP_URL     = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/';
+        const CMAP_PACKED  = true;
+
+        // Read PDF path & title from URL params
+        const params   = new URLSearchParams(location.search);
+        const pdfPath  = params.get('file') || '../assets/pdfs/resalet-tetas.pdf';
+        const docTitle = params.get('title') || 'رسالة تيطس';
+
+        document.getElementById('docTitle').textContent = docTitle;
+        document.title = docTitle + ' - مؤتمر ميراث آبائي';
+
+        // Back button: go back in history if possible
+        document.getElementById('backBtn').addEventListener('click', function(e) {
+            if (history.length > 1) { e.preventDefault(); history.back(); }
+        });
+
+        // ── State ────────────────────────────────────────────────────────────
+        let pdfDoc     = null;
+        let totalPages = 0;
+        let currentPage= 1;
+        let scale      = 1.4;
+        const MIN_SCALE = 0.5;
+        const MAX_SCALE = 3.0;
+
+        const container = document.getElementById('scroll-container');
+        const pageInfo  = document.getElementById('pageInfo');
+        const zoomLabel = document.getElementById('zoomLabel');
+        const loading   = document.getElementById('loading');
+        const errorDiv  = document.getElementById('error-msg');
+
+        // ── Render all pages ─────────────────────────────────────────────────
+        async function renderAllPages() {
+            container.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                await renderPage(i);
+            }
+        }
+
+        async function renderPage(pageNum) {
+            const page     = await pdfDoc.getPage(pageNum);
+            const viewport = page.getViewport({ scale });
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'page-wrapper';
+            wrapper.id = 'page-' + pageNum;
+
+            const canvas  = document.createElement('canvas');
+            canvas.width  = viewport.width;
+            canvas.height = viewport.height;
+
+            // Force LTR on the canvas element so the browser does NOT mirror
+            // the 2D context for RTL documents — PDF.js handles RTL internally.
+            canvas.setAttribute('dir', 'ltr');
+            canvas.style.direction = 'ltr';
+
+            const ctx = canvas.getContext('2d');
+            // Also reset any inherited text direction on the context itself
+            if (ctx.direction !== undefined) ctx.direction = 'ltr';
+
+            const badge = document.createElement('div');
+            badge.className = 'page-number-badge';
+            badge.textContent = pageNum + ' / ' + totalPages;
+
+            wrapper.appendChild(canvas);
+            wrapper.appendChild(badge);
+            container.appendChild(wrapper);
+
+            await page.render({
+                canvasContext: ctx,
+                viewport
+            }).promise;
+        }
+
+        // ── Zoom ─────────────────────────────────────────────────────────────
+        async function changeZoom(delta) {
+            const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale + delta));
+            if (newScale === scale) return;
+            scale = newScale;
+            zoomLabel.textContent = Math.round(scale * 100) + '%';
+            loading.style.display = 'flex';
+            await renderAllPages();
+            loading.style.display = 'none';
+            scrollToPage(currentPage);
+        }
+
+        // ── Page navigation ───────────────────────────────────────────────────
+        function goPage(delta) {
+            const target = currentPage + delta;
+            if (target < 1 || target > totalPages) return;
+            currentPage = target;
+            scrollToPage(currentPage);
+        }
+
+        function scrollToPage(num) {
+            const el = document.getElementById('page-' + num);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Track current page from scroll position
+        container.addEventListener('scroll', () => {
+            const wrappers = container.querySelectorAll('.page-wrapper');
+            let closest = 1;
+            let minDist = Infinity;
+            wrappers.forEach((w, idx) => {
+                const rect = w.getBoundingClientRect();
+                const dist = Math.abs(rect.top - 52);
+                if (dist < minDist) { minDist = dist; closest = idx + 1; }
+            });
+            currentPage = closest;
+            pageInfo.textContent = currentPage + ' / ' + totalPages;
+            document.getElementById('btnPrev').disabled = currentPage <= 1;
+            document.getElementById('btnNext').disabled = currentPage >= totalPages;
+        }, { passive: true });
+
+        // ── Init ─────────────────────────────────────────────────────────────
+        async function init() {
+            // Responsive default scale
+            scale = window.innerWidth < 500 ? 1.1 : 1.4;
+            zoomLabel.textContent = Math.round(scale * 100) + '%';
+
+            try {
+                const loadingTask = pdfjsLib.getDocument({
+                    url: pdfPath,
+                    cMapUrl:    CMAP_URL,
+                    cMapPacked: CMAP_PACKED,
+                });
+                pdfDoc     = await loadingTask.promise;
+                totalPages = pdfDoc.numPages;
+
+                await renderAllPages();
+
+                loading.style.display = 'none';
+                pageInfo.textContent = '1 / ' + totalPages;
+                document.getElementById('btnPrev').disabled = true;
+                document.getElementById('btnNext').disabled = totalPages <= 1;
+
+            } catch (err) {
+                loading.style.display = 'none';
+                errorDiv.style.display = 'flex';
+                document.getElementById('error-text').textContent =
+                    'تعذّر تحميل الملف. تأكد من الاتصال بالإنترنت وحاول مجدداً.';
+                console.error('PDF load error:', err);
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>

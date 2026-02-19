@@ -1,0 +1,297 @@
+/* ── CSS Custom Properties (Light + Dark) ─────────────────────────────── */
+:root {
+    --bg-gradient-start: #667eea;
+    --bg-gradient-end: #764ba2;
+    --header-gradient-start: #5a67d8;
+    --header-gradient-end: #6b46c1;
+    --container-bg: #ffffff;
+    --nav-bg: #f7fafc;
+    --nav-border: #e2e8f0;
+    --nav-btn-bg: #ffffff;
+    --nav-btn-color: #4a5568;
+    --nav-btn-hover-bg: #edf2f7;
+    --nav-btn-active-color: #5a67d8;
+    --content-bg: #ffffff;
+    --day-title-color: #2d3748;
+    --day-title-border: #5a67d8;
+    --schedule-bg: #f7fafc;
+    --schedule-border: #5a67d8;
+    --schedule-hover-shadow: rgba(90, 103, 216, 0.2);
+    --activity-title-color: #2d3748;
+    --speaker-color: #4a5568;
+    --speaker-label-color: #5a67d8;
+    --lecture-bg-start: #667eea15;
+    --lecture-bg-end: #764ba215;
+    --lecture-border: #6b46c1;
+    --prayer-bg-start: #4fd1c515;
+    --prayer-bg-end: #3b82f615;
+    --prayer-border: #3b82f6;
+    --prayer-hover-shadow: rgba(59, 130, 246, 0.3);
+    --study-bg-start: #f093fb15;
+    --study-bg-end: #f5576c15;
+    --study-border: #ec4899;
+    --prayer-tile-bg: #f7fafc;
+    --prayer-tile-border: #3b82f6;
+    --prayer-tile-hover-bg-start: #4fd1c515;
+    --prayer-tile-hover-bg-end: #3b82f615;
+    --prayer-tile-title-color: #2d3748;
+    --dropdown-bg: #f7fafc;
+    --dropdown-border: #5a67d8;
+    --dropdown-hover-shadow: rgba(90, 103, 216, 0.2);
+    --dropdown-title-color: #2d3748;
+    --dropdown-arrow-color: #5a67d8;
+    --dropdown-item-bg: #ffffff;
+    --dropdown-item-border: #5a67d8;
+    --dropdown-item-hover-bg: #edf2f7;
+    --dropdown-item-text-color: #2d3748;
+    --time-bg: #5a67d8;
+    --time-color: #ffffff;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
+    --modal-bg: #ffffff;
+    --modal-header-bg: #5a67d8;
+    --modal-close-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-gradient-start: #1a1a2e;
+        --bg-gradient-end: #16213e;
+        --header-gradient-start: #3730a3;
+        --header-gradient-end: #4c1d95;
+        --container-bg: #1e1e2e;
+        --nav-bg: #16213e;
+        --nav-border: #2d2d4e;
+        --nav-btn-bg: #1e1e2e;
+        --nav-btn-color: #a0aec0;
+        --nav-btn-hover-bg: #2d2d4e;
+        --nav-btn-active-color: #818cf8;
+        --content-bg: #1e1e2e;
+        --day-title-color: #e2e8f0;
+        --day-title-border: #818cf8;
+        --schedule-bg: #2d2d4e;
+        --schedule-border: #818cf8;
+        --schedule-hover-shadow: rgba(129, 140, 248, 0.25);
+        --activity-title-color: #e2e8f0;
+        --speaker-color: #a0aec0;
+        --speaker-label-color: #818cf8;
+        --lecture-bg-start: #667eea22;
+        --lecture-bg-end: #764ba222;
+        --lecture-border: #a78bfa;
+        --prayer-bg-start: #4fd1c522;
+        --prayer-bg-end: #3b82f622;
+        --prayer-border: #60a5fa;
+        --prayer-hover-shadow: rgba(96, 165, 250, 0.3);
+        --study-bg-start: #f093fb22;
+        --study-bg-end: #f5576c22;
+        --study-border: #f472b6;
+        --prayer-tile-bg: #2d2d4e;
+        --prayer-tile-border: #60a5fa;
+        --prayer-tile-hover-bg-start: #4fd1c522;
+        --prayer-tile-hover-bg-end: #3b82f622;
+        --prayer-tile-title-color: #e2e8f0;
+        --dropdown-bg: #2d2d4e;
+        --dropdown-border: #818cf8;
+        --dropdown-hover-shadow: rgba(129, 140, 248, 0.25);
+        --dropdown-title-color: #e2e8f0;
+        --dropdown-arrow-color: #818cf8;
+        --dropdown-item-bg: #1e1e2e;
+        --dropdown-item-border: #818cf8;
+        --dropdown-item-hover-bg: #3d3d5e;
+        --dropdown-item-text-color: #e2e8f0;
+        --time-bg: #4338ca;
+        --time-color: #e2e8f0;
+        --modal-overlay: rgba(0, 0, 0, 0.85);
+        --modal-bg: #1e1e2e;
+        --modal-header-bg: #3730a3;
+        --modal-close-color: #e2e8f0;
+    }
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Base ──────────────────────────────────────────────────────────────── */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ── Layout ────────────────────────────────────────────────────────────── */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--container-bg);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.header {
+    background: linear-gradient(135deg, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+}
+.header h1 { font-size: 28px; margin-bottom: 10px; font-weight: 600; }
+.header h2 { font-size: 22px; margin-bottom: 8px; font-weight: 500; }
+.header h3 { font-size: 18px; opacity: 0.9; font-weight: 400; }
+
+/* ── Navigation ────────────────────────────────────────────────────────── */
+.navigation {
+    display: flex;
+    background: var(--nav-bg);
+    border-bottom: 2px solid var(--nav-border);
+}
+
+.nav-button {
+    flex: 1;
+    padding: 20px;
+    background: var(--nav-btn-bg);
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--nav-btn-color);
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+.nav-button:hover  { background: var(--nav-btn-hover-bg); color: var(--nav-btn-active-color); }
+.nav-button.active { color: var(--nav-btn-active-color); border-bottom-color: var(--nav-btn-active-color); }
+
+/* ── Content & Sections ────────────────────────────────────────────────── */
+.content { padding: 40px 30px; background: var(--content-bg); }
+
+.day-section { display: none; }
+.day-section.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.day-title {
+    font-size: 26px;
+    color: var(--day-title-color);
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid var(--day-title-border);
+    font-weight: 600;
+}
+
+/* ── Schedule Items ────────────────────────────────────────────────────── */
+.schedule-item {
+    background: var(--schedule-bg);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border-right: 4px solid var(--schedule-border);
+    transition: all 0.3s ease;
+}
+.schedule-item:hover         { transform: translateX(-5px); box-shadow: 0 4px 12px var(--schedule-hover-shadow); }
+.schedule-item.clickable     { cursor: pointer; }
+.schedule-item.clickable:hover { transform: translateX(-5px); box-shadow: 0 6px 16px var(--schedule-hover-shadow); }
+
+.time {
+    display: inline-block;
+    background: var(--time-bg);
+    color: var(--time-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.activity-title { font-size: 20px; color: var(--activity-title-color); font-weight: 600; margin: 10px 0; }
+
+.speaker       { color: var(--speaker-color); font-size: 15px; margin: 5px 0; padding-right: 10px; }
+.speaker-label { color: var(--speaker-label-color); font-weight: 600; }
+
+/* Schedule type variants */
+.lecture { background: linear-gradient(135deg, var(--lecture-bg-start) 0%, var(--lecture-bg-end) 100%); border-right-color: var(--lecture-border); }
+.prayer  { background: linear-gradient(135deg, var(--prayer-bg-start)  0%, var(--prayer-bg-end)  100%); border-right-color: var(--prayer-border); }
+.study   { background: linear-gradient(135deg, var(--study-bg-start)   0%, var(--study-bg-end)   100%); border-right-color: var(--study-border); }
+
+/* ── Prayer Tiles ──────────────────────────────────────────────────────── */
+.prayer-tile {
+    background: var(--prayer-tile-bg);
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    border-right: 4px solid var(--prayer-tile-border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.prayer-tile:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 4px 12px var(--prayer-hover-shadow);
+    background: linear-gradient(135deg, var(--prayer-tile-hover-bg-start) 0%, var(--prayer-tile-hover-bg-end) 100%);
+}
+.prayer-tile-title { font-size: 22px; color: var(--prayer-tile-title-color); font-weight: 600; display: flex; align-items: center; gap: 10px; }
+
+/* ── Dropdowns ─────────────────────────────────────────────────────────── */
+.dropdown-container {
+    background: var(--dropdown-bg);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    border-right: 4px solid var(--dropdown-border);
+    transition: all 0.3s ease;
+}
+.dropdown-container:hover { box-shadow: 0 4px 12px var(--dropdown-hover-shadow); }
+
+.dropdown-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 10px 0; }
+
+.dropdown-title { font-size: 22px; color: var(--dropdown-title-color); font-weight: 600; display: flex; align-items: center; gap: 10px; }
+
+.dropdown-arrow { font-size: 20px; color: var(--dropdown-arrow-color); transition: transform 0.3s ease; }
+.dropdown-arrow.open { transform: rotate(180deg); }
+
+.dropdown-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.dropdown-content.open { max-height: 2000px; margin-top: 15px; }
+
+.dropdown-item {
+    background: var(--dropdown-item-bg);
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-right: 3px solid var(--dropdown-item-border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.dropdown-item:hover { background: var(--dropdown-item-hover-bg); transform: translateX(-3px); }
+.dropdown-item-text  { font-size: 16px; color: var(--dropdown-item-text-color); font-weight: 500; }
+
+/* ── PDF Modal (kept for potential future use) ─────────────────────────── */
+.pdf-modal-overlay { display: none; position: fixed; inset: 0; background: var(--modal-overlay); z-index: 1000; align-items: center; justify-content: center; }
+.pdf-modal-overlay.open { display: flex; }
+.pdf-modal { background: var(--modal-bg); border-radius: 16px; overflow: hidden; width: 92vw; max-width: 860px; height: 88vh; display: flex; flex-direction: column; box-shadow: 0 25px 80px rgba(0,0,0,0.5); }
+.pdf-modal-header { background: var(--modal-header-bg); color: var(--modal-close-color); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.pdf-modal-title { font-size: 18px; font-weight: 600; }
+.pdf-modal-close { background: rgba(255,255,255,0.2); border: none; color: var(--modal-close-color); font-size: 22px; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; line-height: 1; }
+.pdf-modal-close:hover { background: rgba(255,255,255,0.35); }
+.pdf-modal-body { flex: 1; overflow: hidden; }
+.pdf-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    body { padding: 10px; }
+    .header h1 { font-size: 22px; }
+    .header h2 { font-size: 18px; }
+    .header h3 { font-size: 16px; }
+    .nav-button { font-size: 14px; padding: 15px 8px; }
+    .content { padding: 20px 15px; }
+    .activity-title { font-size: 18px; }
+    .schedule-item { padding: 15px; }
+    .prayer-tile-title, .dropdown-title { font-size: 18px; }
+    .pdf-modal { width: 100vw; height: 100dvh; border-radius: 0; }
+}
