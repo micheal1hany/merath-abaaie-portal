@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إبصاليات أدام للصوم الكبير - مؤتمر ميراث آبائي</title>
+    <style>
+        :root {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --header-gradient-start: #5a67d8;
+            --header-gradient-end: #6b46c1;
+            --container-bg: #ffffff;
+            --back-btn-bg: rgba(255,255,255,0.2);
+            --back-btn-color: #ffffff;
+            --back-btn-hover-bg: rgba(255,255,255,0.35);
+            --title-color: #ffffff;
+            --subtitle-color: rgba(255,255,255,0.85);
+            --content-bg: #ffffff;
+            --arabic-bg: #f0f4ff;
+            --arabic-border: #5a67d8;
+            --arabic-label-color: #5a67d8;
+            --arabic-text-color: #2d3748;
+            --coptic-bg: #f5f0ff;
+            --coptic-border: #9f7aea;
+            --coptic-label-color: #6b46c1;
+            --coptic-text-color: #3d2d5e;
+            --halleluia-color: #5a67d8;
+            --divider-color: #e2e8f0;
+            --column-gap-bg: #e2e8f0;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-gradient-start: #1a1a2e;
+                --bg-gradient-end: #16213e;
+                --header-gradient-start: #3730a3;
+                --header-gradient-end: #4c1d95;
+                --container-bg: #1e1e2e;
+                --back-btn-bg: rgba(255,255,255,0.15);
+                --back-btn-color: #e2e8f0;
+                --back-btn-hover-bg: rgba(255,255,255,0.25);
+                --title-color: #e2e8f0;
+                --subtitle-color: rgba(220,220,255,0.8);
+                --content-bg: #1e1e2e;
+                --arabic-bg: #1e2240;
+                --arabic-border: #818cf8;
+                --arabic-label-color: #818cf8;
+                --arabic-text-color: #e2e8f0;
+                --coptic-bg: #221a3a;
+                --coptic-border: #a78bfa;
+                --coptic-label-color: #c4b5fd;
+                --coptic-text-color: #ddd6fe;
+                --halleluia-color: #818cf8;
+                --divider-color: #2d2d4e;
+                --column-gap-bg: #2d2d4e;
+            }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--back-btn-bg);
+            color: var(--back-btn-color);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+            align-self: flex-start;
+        }
+        .back-btn:hover { background: var(--back-btn-hover-bg); }
+        .header-title { text-align: center; }
+        .header-title .icon { font-size: 48px; display: block; margin-bottom: 12px; }
+        .header-title h1 { font-size: 26px; font-weight: 700; color: var(--title-color); margin-bottom: 8px; }
+        .column-labels {
+            display: grid;
+            grid-template-columns: 1fr 4px 1fr;
+            background: var(--column-gap-bg);
+            border-bottom: 2px solid var(--divider-color);
+        }
+        .col-label { padding: 12px 20px; font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+        .col-label-arabic { background: var(--arabic-bg); color: var(--arabic-label-color); text-align: right; border-left: 3px solid var(--column-gap-bg); }
+        .col-label-coptic { background: var(--coptic-bg); color: var(--coptic-label-color); text-align: left; border-right: 3px solid var(--column-gap-bg); }
+        .content { padding: 24px 20px; background: var(--content-bg); display: flex; flex-direction: column; gap: 16px; }
+        .stanza-row {
+            display: grid;
+            grid-template-columns: 1fr 4px 1fr;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .col-divider { background: var(--column-gap-bg); width: 4px; }
+        .stanza-arabic { background: var(--arabic-bg); border-right: 4px solid var(--arabic-border); padding: 20px 22px; direction: rtl; text-align: right; }
+        .stanza-coptic { background: var(--coptic-bg); border-left: 4px solid var(--coptic-border); padding: 20px 22px; direction: rtl; text-align: right; }
+        .stanza-number { font-size: 11px; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
+        .stanza-arabic .stanza-number { color: var(--arabic-label-color); }
+        .stanza-coptic .stanza-number { color: var(--coptic-label-color); }
+        .stanza-text { font-size: 16px; line-height: 2; white-space: pre-line; }
+        .stanza-arabic .stanza-text { color: var(--arabic-text-color); }
+        .stanza-coptic .stanza-text { color: var(--coptic-text-color); }
+        .halleluia-row { display: grid; grid-template-columns: 1fr 4px 1fr; border-radius: 10px; overflow: hidden; }
+        .halleluia-cell { padding: 14px 22px; font-size: 17px; font-weight: 700; color: var(--halleluia-color); text-align: center; }
+        .halleluia-cell-ar { background: var(--arabic-bg); }
+        .halleluia-cell-co { background: var(--coptic-bg); }
+        @media (max-width: 700px) {
+            body { padding: 0; }
+            .container { border-radius: 0; min-height: 100vh; }
+            .header { padding: 20px; }
+            .header-title h1 { font-size: 20px; }
+            .content { padding: 10px 6px; gap: 10px; }
+            .stanza-arabic, .stanza-coptic { padding: 14px 10px; }
+            .stanza-text { font-size: 17px; line-height: 2.1; }
+            .stanza-number { font-size: 12px; }
+            .halleluia-cell { font-size: 16px; padding: 12px 6px; }
+            .col-label { padding: 10px 10px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a class="back-btn" href="../index.html" onclick="history.length > 1 ? (history.back(), false) : true">
+                &#8592; رجوع
+            </a>
+            <div class="header-title">
+                <span class="icon">📜</span>
+                <h1>إبصاليات أدام للصوم الكبير</h1>
+            </div>
+        </div>
+
+        <div class="column-labels">
+            <div class="col-label col-label-arabic">☦️ عربي</div>
+            <div style="background: var(--column-gap-bg);"></div>
+            <div class="col-label col-label-coptic">☦️ قبطي</div>
+        </div>
+
+        <div class="content">
+
+            <!-- مقطع ١ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١</div>
+                    <div class="stanza-text">بصوتى صرخت، إليك يا إلهى
+فمن أجل الصوم
+أعطنى خلاصاً</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١</div>
+                    <div class="stanza-text">آى أوش إنتا إسمى إى إبشوى هاروك بانوتي
+اثفى تى نيستيا
+موي ني إن أووسوتى</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٢ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٢</div>
+                    <div class="stanza-text">أعن ضعفى، أيها المخلص
+من أجل الصوم
+أغسل أقذارنا</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٢</div>
+                    <div class="stanza-text">فؤيثين إيتا ميتجوب اوبي ريف نوهيم
+اثفى تى نيستيا
+إك إى أوى إننين تشوخيم</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٣ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٣</div>
+                    <div class="stanza-text">لأن آبائنا الأولين، أعلمونا أنه
+من أجل الصوم
+قد فازوا بالخلاص</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٣</div>
+                    <div class="stanza-text">جى غار أفتامون إنجى نين شورب إن يوتي
+اثفى تى نيستيا
+أفشاشنى إى بي سوتى</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٤ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٤</div>
+                    <div class="stanza-text">داود إبن يسى، فى ملكه
+ومن أجل الصوم
+نال الغلبة</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٤</div>
+                    <div class="stanza-text">دافيد فا يسى خين تيف ميتؤرو
+اثفى تى نيستيا
+افتشي إم بي تشرو</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٥ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٥</div>
+                    <div class="stanza-text">حواء وآدم، أغوتهما الحية
+ومن أجل الصوم
+تحنن الرب عليهم</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٥</div>
+                    <div class="stanza-text">ايفا نيم آدام آبى هوف إفهال إممؤوو
+اثفى تى نيستيا
+آإبتشويس شينهيت خارون</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٦ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٦</div>
+                    <div class="stanza-text">حقاً إستنار، عقل أخنوخ
+ومن أجل الصوم
+رُفع إلى السماء</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٦</div>
+                    <div class="stanza-text">ذى أوندوس إينوخ آفئير أوأوينى انجى بيف نوس
+اثفى تى نيستيا
+آف أولف إى أورانوس</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٧ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٧</div>
+                    <div class="stanza-text">إيليا فى صلاته، طلب فأخذ
+ومن أجل الصوم
+لم يدع مطراً يأتى</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٧</div>
+                    <div class="stanza-text">إيلياس خين بيف إشليل آفطوبه أووه آفتشي
+اثفى تى نيستيا
+امبيف كا أومون هوأوو إى إي</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٨ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٨</div>
+                    <div class="stanza-text">ذبيحة إبراهيم، قبلها الرب إليه
+ومن أجل الصوم
+قد ضاف الله إليه</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٨</div>
+                    <div class="stanza-text">ثيسيا إن أبرآم آ إبتشويس شوبس ايروف
+اثفى تى نيستيا
+آ افنوتى جويلى ايروف</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٩ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٩</div>
+                    <div class="stanza-text">إسحق الحبيب، قُدم إلى الذبح
+ومن أجل الصوم
+خَلص بتهليل</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٩</div>
+                    <div class="stanza-text">إسآك بى ميزيت آفئنف إى إب خول خيل
+اثفى تى نيستيا
+آف أوجاى خين أو ثيليل</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١٠ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١٠</div>
+                    <div class="stanza-text">ويعقوب أيضاً، أظلمت عيناه
+ومن أجل الصوم
+نظر السلم</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١٠</div>
+                    <div class="stanza-text">كى بالين ياكوب نيف فال آف اير كاكى
+اثفى تى نيستيا
+أفناف إيتي موكي</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١١ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١١</div>
+                    <div class="stanza-text">ويوسف أيضاً، بيع لأناس
+ومن أجل الصوم
+صار ملكاً على مصر</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١١</div>
+                    <div class="stanza-text">ليبون غار يوسيف آفتيف إنهان رومي
+اثفى تى نيستيا
+آفئير أورو ايجين كيمى</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١٢ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١٢</div>
+                    <div class="stanza-text">موسى النبى، تكلم مع الله
+ومن أجل الصوم
+أخذ اللوحين</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١٢</div>
+                    <div class="stanza-text">مويسيس بى بروفيتيس أفساجى نيم افنوتى
+اثفى تى نيستيا
+آفتشى إنتي بلاكس اسنوتى</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١٣ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١٣</div>
+                    <div class="stanza-text">نوح الصديق، قبل الطوفان
+من أجل الصوم
+صنع الفلك</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١٣</div>
+                    <div class="stanza-text">نو إى بى ذيكيئوس خا بى كاطا كليزموس
+اثفى تى نيستيا
+آفئيري انتى كيفوتوس</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١٤ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١٤</div>
+                    <div class="stanza-text">رجال نينوى، بغتة
+من أجل الصوم
+سمع الرب صوتهم</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١٤</div>
+                    <div class="stanza-text">كسابينا ني رومي انتى نين ايف إي
+اثفى تى نيستيا
+آ بين تشويس سوتيم إيتو إسمى</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١٥ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١٥</div>
+                    <div class="stanza-text">نجا لوط من النار، بأعماله
+ومن أجل الصوم
+خَلص مع بنتيه</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١٥</div>
+                    <div class="stanza-text">أووه لوت خين بى اكروم ايفول هيتين نيف اهفئوى
+اثفى تى نيستيا
+آف أوجاى نيم نيف شيرى</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١٦ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١٦</div>
+                    <div class="stanza-text">يونان النبى، فى بطن الحوت
+من أجل الصوم
+خرج سالماً حسناً</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١٦</div>
+                    <div class="stanza-text">باي ريتي يونا خين اثنيجي امبي كيتوس
+اثفى تى نيستيا
+آفئى ايفول كالوس</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١٧ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١٧</div>
+                    <div class="stanza-text">أفواه الأسود، لم تقترب من دانيال
+ومن أجل الصوم
+خضعت بصلاته</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١٧</div>
+                    <div class="stanza-text">روؤ إنى موئي إمبو اشخونت إى دانئيل
+اثفى تى نيستيا
+آف تشنيجوأو خين بيف اشليل</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١٨ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١٨</div>
+                    <div class="stanza-text">صموئيل، ماسح الملوك
+من أجل الصوم
+طالت أيامه</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١٨</div>
+                    <div class="stanza-text">صاموئيل بى ريف ثوهس انتى ني أوروؤ
+اثفى تى نيستيا
+آف آى آى انجى نيف ايهؤو</div>
+                </div>
+            </div>
+
+            <!-- مقطع ١٩ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">١٩</div>
+                    <div class="stanza-text">والثلاثة فتية، فى بابل
+من أجل الصوم
+أطفأوا النار</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">١٩</div>
+                    <div class="stanza-text">توتى بي شومت إن آلو انتى اثفا فيلون
+اثفى تى نيستيا
+آف أوشيم إمبى إكروم</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٢٠ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٢٠</div>
+                    <div class="stanza-text">ها سادتى، الآباء الرسل
+من أجل الصوم
+ردوا الأمم</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٢٠</div>
+                    <div class="stanza-text">ايوس ناتشويس انيوتى إن آبوستولوس
+اثفى تى نيستيا
+آف تاستو إنني إثنوس</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٢١ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٢١</div>
+                    <div class="stanza-text">إله الآلهة، يسوع الديان
+من أجل الصوم
+ثبت المجاهدين</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٢١</div>
+                    <div class="stanza-text">إفنوتى انتى نينوتى إيسوس بي كريتيس
+اثفى تى نيستيا
+أفتاجرو إنني آثليتيس</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٢٢ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٢٢</div>
+                    <div class="stanza-text">برودة وراحة، ونياحاً
+من أجل الصوم
+تكون فى الدينونة</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٢٢</div>
+                    <div class="stanza-text">إكفوف نيم أو امتون نيم أو آنابفسيس
+اثفى تى نيستيا
+ناشوبى خين تى إكريسيس</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٢٣ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٢٣</div>
+                    <div class="stanza-text">علمنا المخلص، فى إنجيله
+من أجل الصوم
+نُخرج الشياطين</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٢٣</div>
+                    <div class="stanza-text">ابسوتير آف اتسافون خين بيف آنجيليون
+اثفى تى نيستيا
+انتين هيؤي إنني ذيمون</div>
+                </div>
+            </div>
+
+            <!-- مقطع ٢٤ -->
+            <div class="stanza-row">
+                <div class="stanza-arabic">
+                    <div class="stanza-number">٢٤</div>
+                    <div class="stanza-text">أيها المتحنن، على الخطاة
+من أجل الصوم
+إغفر لنا خطايانا</div>
+                </div>
+                <div class="col-divider"></div>
+                <div class="stanza-coptic">
+                    <div class="stanza-number">٢٤</div>
+                    <div class="stanza-text">أو بي شانا إهثيف ايجين ني ريف إرنوفي
+اثفى تى نيستيا
+كونان ايفول إن نين نوفى</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
